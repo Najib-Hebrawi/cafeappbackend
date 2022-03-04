@@ -1,0 +1,19 @@
+{
+  "name": "cafeapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Najib-Hebrawi/cafeappbackend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Najib-Hebrawi/cafeappbackend/issues"
+  },
+  "homepage": "https://github.com/Najib-Hebrawi/cafeappbackend#readme"
+}
