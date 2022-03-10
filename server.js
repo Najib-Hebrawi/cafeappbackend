@@ -24,10 +24,13 @@ server.listen(port, hostname, () => {
 
 const app = express();
 
-
+// here we define a hostname and port, in our case they should be our server.
 const hostname = 'localhost';
 const port = 3000;
 
+
+// here we define a route.
+// here indside the route we should have a list of ( products in our project (crepe cafe)) from  database and return them.
 app.get('/', (req,res) => {
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/plain');
