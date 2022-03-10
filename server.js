@@ -10,6 +10,7 @@ const server = createServer((req, res) => {
     res.end('Hello From server');
 });
 
+
 server.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
 });
@@ -39,6 +40,7 @@ app.get('/', (req,res) => {
 
 
 // here is an another route for menu and it should return a JSON objekt of produkts.
+// for example we can move all the route related to menu to a separate file like menu.js.
 app.get('/api/crepecafe-menu', (req,res) => {
     res.statusCode = 200;
     res.send(//some object//);
