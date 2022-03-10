@@ -36,6 +36,17 @@ app.get('/', (req,res) => {
     res.setHeader('Content-Type', 'text/plain');
     res.send('Hello From serverrrrrrrr')
 })
+
+
+// here is an another route for menu and it should return a JSON objekt of produkts.
+app.get('/api/crepecafe-menu', (req,res) => {
+    res.statusCode = 200;
+    res.send(//some object//);
+    
+  
+})
+
+
 app.listen(port,hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
 })
