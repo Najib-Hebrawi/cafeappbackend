@@ -36,7 +36,7 @@ server.listen(port, hostname, () => {
 
  // here we define a hostname and port, in our case they should be our server.
 const hostname = process.env.HOST;
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 
 
 // here we define a route.
