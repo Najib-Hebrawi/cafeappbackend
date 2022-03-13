@@ -13,6 +13,10 @@ server.listen(port, hostname, () => {
 */
 
 
+// adding some references:
+// https://medium.com/the-node-js-collection/making-your-node-js-work-everywhere-with-environment-variables-2da8cdf6e786
+// https://www.youtube.com/watch?v=5WFyhsnU4Ik
+// https://www.youtube.com/watch?v=pKd0Rpw7O48
 
 
 
