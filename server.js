@@ -46,15 +46,20 @@ app.get('/', (req,res) => {
     res.setHeader('Content-Type', 'text/plain');
     res.send('Hello From server');
 });
-
-
 // here is an another route for menu and it should return a JSON objekt of produkts.
 // for example we can move all the route related to menu to a separate file like menu.js.
 app.get('/api/crepecafe-menu', (req,res) => {
     res.statusCode = 200;
-    res.send(); // here we can have some object.
-    
+    res.send(); // here we can have some object. 
 });
+
+
+
+
+
+
+
+
 
 
 
