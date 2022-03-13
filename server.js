@@ -12,6 +12,12 @@ server.listen(port, hostname, () => {
 });
 */
 
+
+
+
+
+
+
  const express= require('express');
  const app = express();
 
@@ -20,13 +26,15 @@ server.listen(port, hostname, () => {
 const hostname = 'localhost';
 const port = 3000;
 
+
 // here we define a route.
 // here indside the route we should have a list of ( products in our project (crepe cafe)) from  database and return them.
 app.get('/', (req,res) => {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain');
+    console.log('thanks for the request');
+    res.writeHead(200, {'Content-Type': 'text/plain'});
     res.send('Hello From serverrrrrrrr')
 });
+
 
 // here is an another route for menu and it should return a JSON objekt of produkts.
 // for example we can move all the route related to menu to a separate file like menu.js.
@@ -35,6 +43,9 @@ app.get('/api/crepecafe-menu', (req,res) => {
     res.send(); // here we can have some object.
     
 });
+
+
+
 
 app.listen(port,hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
