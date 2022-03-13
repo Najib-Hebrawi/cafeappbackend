@@ -25,6 +25,9 @@ server.listen(port, hostname, () => {
  const express= require('express');
  const app = express();
  
+ //define a Joi, if we need to use it in the future
+ const Joi = require('Joi');
+ 
  // config method is the one thats going off and read our enviromental variables file and save all those variables.
  // so when this script runs it will have access to all of those through somethings called (process.env).
  // and we need to create a file saving the variables.
