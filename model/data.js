@@ -1,6 +1,6 @@
 
 
-const data= {
+let data= {
     categories: [
 
         {name:'Crepe'},

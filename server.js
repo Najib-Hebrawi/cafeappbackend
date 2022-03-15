@@ -6,6 +6,8 @@
  const mongoose = require('mongoose'); // import mongoose.
  const data = require('./model/data'); // import data.js
  const Joi = require('Joi');//define a Joi, if we need to use it in the future
+let { products } = require('./model/data');
+const { equal } = require('Joi');
  dotenv.config();// we can set an enviroment variable by exexuting (export command) for mac, and (set command) for windows.
  
 
@@ -29,15 +31,13 @@ app.get('/', (req,res) => {
     res.send('Hello From server');
 });
 
-
 // show the categories.
 app.get('/api/categories' , (req, res) => {
 res.send(data.categories);
 });
 
-
 // add products to mongodb
-const Product = mongoose.model(
+let Product = mongoose.model(
     'products', 
     new mongoose.Schema ({
         name:String, 
@@ -58,7 +58,6 @@ const products = await Product.find (category ? {category} : {}); // return the 
 res.send(products);
 } );
 
-
 // post a new product to products.
 app.post('/api/products' , async (req,res) =>{
 const newProduct = new Product(req.body);// add new products to our data body. // (req.body) contain the data that user pass on this request.
@@ -66,7 +65,18 @@ const savedProduct = await new Product().save();// save the changes.
 res.send(savedProduct);// return the new data.
 });
 
-
+// delete a product from products.
+app.delete('/api/products/:id' , async (req,res) =>{
+Product.deleteOne({_id:req.params.id})
+.then(result => {
+    res.status(200).json({
+        message:'product deleted',
+        result:result})})
+.catch(err => {
+    res.status(500).json({
+        error: err,
+        message:'product does not deleted, no such as this id...'})})
+});
 
 
 
