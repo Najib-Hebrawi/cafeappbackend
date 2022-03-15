@@ -1,9 +1,10 @@
  const express= require('express');
  const app = express();
+ const dotenv =require('dotenv');
  const mongoose = require('mongoose'); // import mongoose.
  const data = require('./model/data'); // import data.js
  const Joi = require('Joi');//define a Joi, if we need to use it in the future
- require('dotenv').config();// we can set an enviroment variable by exexuting (export command) for mac, and (set command) for windows.
+ dotenv.config();// we can set an enviroment variable by exexuting (export command) for mac, and (set command) for windows.
  
 
 
@@ -15,6 +16,9 @@
 
 const hostname = process.env.HOST;
 const port = process.env.PORT || 3000;
+mongoose.connect(process.env.MONGODB_URI, {});
+
+
 
 // here we define a route to chake that api is working.
 app.get('/', (req,res) => {
@@ -25,10 +29,32 @@ app.get('/', (req,res) => {
 
 
 
+// add products to mongodb
+const Product = mongoose.model(
+    'products', 
+    new mongoose.Schema ({
+        name:String, 
+        description:String,
+        price:Number,
+        category:String,
+    })
+);
+app.get('/api/products/seed', async (req, res) => {
+    const products = await Product.insertMany(data.products);
+    res.send({products}); 
+});
 
-// here is an another route for menu and it should return a JSON objekt of produkts.
-app.get('/api/categories', (req,res) => {
-    res.send(data.categories); // here we can have some object. 
+
+// add category to mongodb
+const Category = mongoose.model(
+    'categories', 
+    new mongoose.Schema ({
+        name:String,
+    })
+);
+app.get('/api/category', async (req,res) => {
+    const categories = await Category.insertMany(data.categories);
+    res.send(categories); 
 });
 
 
