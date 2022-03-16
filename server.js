@@ -25,7 +25,7 @@ mongoose.connect(process.env.MONGODB_URI, {});
 
 
 
-// here we define a route to chake that api is working.
+// here we define a route to chake that api is working, apen in lokalhost.
 app.get('/', (req,res) => {
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/plain');
@@ -47,6 +47,7 @@ let Product = mongoose.model(
         category:String,
     })
 );
+// fetch the products from products Array.
 app.get('/api/products/seed', async (req, res) => {
     const products = await Product.insertMany(data.products);
     res.send({products}); 
@@ -83,6 +84,7 @@ const product = new Product({
     _id: new mongoose.Types.ObjectId,
     name:req.body.name,
     description:req.body.description,
+    price:req.body.price,
     category:req.body.category
 })
 product.save()
@@ -112,6 +114,33 @@ Product.deleteOne({_id:req.params.id})
         error: err,
         message:'product does not deleted, no such as this id...'})})
 });
+
+
+// (put a product)=(update product).
+app.put('/api/products/:id', async (req,res) =>{
+console.log(req.params.id);
+Product.findOneAndUpdate({_id:req.params.id},{
+    $set:{
+    name:req.body.name,
+    description:req.body.description,
+    price:req.body.price,
+    category:req.body.category
+    }
+})
+.then(result =>{
+    res.status(200).json({
+        updatedProduct:result
+    })
+})
+.catch(err =>{
+    console.log(err);
+    res.status(500).json({
+        error: err
+    })
+
+})
+});
+
 
 
 
