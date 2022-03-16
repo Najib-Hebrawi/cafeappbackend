@@ -16,6 +16,7 @@ const { equal } = require('Joi');
 // https://medium.com/the-node-js-collection/making-your-node-js-work-everywhere-with-environment-variables-2da8cdf6e786
 // https://www.youtube.com/watch?v=5WFyhsnU4Ik
 // https://www.youtube.com/watch?v=pKd0Rpw7O48
+//https://www.youtube.com/watch?v=x4zNO6iK0PQ&list=PLgWjD_CBfh0ACkCyg5Kjk0mh2Mcc-sZa3&index=8
 
 
 const hostname = process.env.HOST;
@@ -75,11 +76,28 @@ app.get('/api/products/:id',async (req,res) => {
 
 });
 
+
 // post a new product to products.
 app.post('/api/products' , async (req,res) =>{
-const newProduct = new Product(req.body);// add new products to our data body. // (req.body) contain the data that user pass on this request.
-const savedProduct = await new Product().save();// save the changes.
-res.send(savedProduct);// return the new data.
+const product = new Product({
+    _id: new mongoose.Types.ObjectId,
+    name:req.body.name,
+    description:req.body.description,
+    category:req.body.category
+})
+product.save()
+.then(result =>{
+    console.log(result);
+    res.status(200).json({
+        newProduct:result,
+    })
+})
+.catch(err =>{
+    console.log(err);
+    res.status(500).json({
+        error: err
+    })
+})
 });
 
 // delete a product from products.
