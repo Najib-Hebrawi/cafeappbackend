@@ -57,6 +57,23 @@ const {category} = req.query;
 const products = await Product.find (category ? {category} : {}); // return the products in this category, or return all products.
 res.send(products);
 } );
+// get product by ID.
+app.get('/api/products/:id',async (req,res) => {
+    const _id = req.params.id;
+    Product.findById(_id)
+    .exec()
+    .then(result => {
+    console.log(result);
+    res.json({
+    product:result,
+    message:"product find"})})
+    .catch(err => {
+    res.status(500).json({
+    error: err,
+     message:'product does not finded, no such as this id...'})})
+
+
+});
 
 // post a new product to products.
 app.post('/api/products' , async (req,res) =>{
@@ -77,6 +94,7 @@ Product.deleteOne({_id:req.params.id})
         error: err,
         message:'product does not deleted, no such as this id...'})})
 });
+
 
 
 
