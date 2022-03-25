@@ -59,6 +59,7 @@ const {category} = req.query;
 const products = await Product.find (category ? {category} : {}); // return the products in this category, or return all products.
 res.send(products);
 } );
+
 // get product by ID.
 app.get('/api/products/:id',async (req,res) => {
     const _id = req.params.id;
@@ -73,8 +74,6 @@ app.get('/api/products/:id',async (req,res) => {
     res.status(500).json({
     error: err,
      message:'product does not finded, no such as this id...'})})
-
-
 });
 
 
@@ -140,7 +139,6 @@ Product.findOneAndUpdate({_id:req.params.id},{
 
 })
 });
-
 
 
 
