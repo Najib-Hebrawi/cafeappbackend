@@ -25,8 +25,12 @@ mongoose.connect(process.env.MONGODB_URI, {});
 
 
 
-// here we define a route to chake that api is working, apen in lokalhost.
-app.get('/', (req,res) => {
+// add the middlewarw at the global level// this is going to be run before every single one of our other requests
+app.use(middleware);
+
+
+// here we define a route to chake that api is working, open in lokalhost. // 
+app.get('/',(req,res) => {
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/plain');
     res.send('Hello From server');
@@ -60,7 +64,7 @@ const products = await Product.find (category ? {category} : {}); // return the 
 res.send(products);
 } );
 
-// get product by ID.
+// get product by ID. 
 app.get('/api/products/:id',async (req,res) => {
     const _id = req.params.id;
     Product.findById(_id)
@@ -139,6 +143,12 @@ Product.findOneAndUpdate({_id:req.params.id},{
 
 })
 });
+
+
+function middleware( req, res, next){
+    console.log( 'I am a middleware')
+    next()
+};
 
 
 
