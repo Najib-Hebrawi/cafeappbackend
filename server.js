@@ -85,6 +85,71 @@ app.get('/api/products/:id',async (req,res) => {
 
 
 
+// post a new product to products.
+app.post('/api/products' , async (req,res) =>{
+    const product = new Product({
+        _id: new mongoose.Types.ObjectId,
+        name:req.body.name,
+        description:req.body.description,
+        price:req.body.price,
+        category:req.body.category
+    })
+    product.save()
+    .then(result =>{
+        console.log(result);
+        res.status(200).json({
+            newProduct:result,
+        })
+    })
+    .catch(err =>{
+        console.log(err);
+        res.status(500).json({
+            error: err
+        })
+    })
+    });
+    
+    // delete a product from products.
+    app.delete('/api/products/:id' , async (req,res) =>{
+    Product.deleteOne({_id:req.params.id})
+    .then(result => {
+        res.status(200).json({
+            message:'product deleted',
+            result:result})})
+    .catch(err => {
+        res.status(500).json({
+            error: err,
+            message:'product does not deleted, no such as this id...'})})
+    });
+    
+    
+    // (put a product)=(update product).
+    app.put('/api/products/:id', async (req,res) =>{
+    console.log(req.params.id);
+    Product.findOneAndUpdate({_id:req.params.id},{
+        $set:{
+        name:req.body.name,
+        description:req.body.description,
+        price:req.body.price,
+        category:req.body.category
+        }
+    })
+    .then(result =>{
+        res.status(200).json({
+            updatedProduct:result
+        })
+    })
+    .catch(err =>{
+        console.log(err);
+        res.status(500).json({
+            error: err
+        })
+    
+    })
+    });
+    
+
+
 // here we define a route get users.
 app.get('/api/users',(req,res) => {
     res.statusCode = 200;
@@ -126,70 +191,6 @@ bcrypt.hash(req.body.password,10 ,(err,hash)=>{
 });
 
 
-
-
-// post a new product to products.
-app.post('/api/products' , async (req,res) =>{
-const product = new Product({
-    _id: new mongoose.Types.ObjectId,
-    name:req.body.name,
-    description:req.body.description,
-    price:req.body.price,
-    category:req.body.category
-})
-product.save()
-.then(result =>{
-    console.log(result);
-    res.status(200).json({
-        newProduct:result,
-    })
-})
-.catch(err =>{
-    console.log(err);
-    res.status(500).json({
-        error: err
-    })
-})
-});
-
-// delete a product from products.
-app.delete('/api/products/:id' , async (req,res) =>{
-Product.deleteOne({_id:req.params.id})
-.then(result => {
-    res.status(200).json({
-        message:'product deleted',
-        result:result})})
-.catch(err => {
-    res.status(500).json({
-        error: err,
-        message:'product does not deleted, no such as this id...'})})
-});
-
-
-// (put a product)=(update product).
-app.put('/api/products/:id', async (req,res) =>{
-console.log(req.params.id);
-Product.findOneAndUpdate({_id:req.params.id},{
-    $set:{
-    name:req.body.name,
-    description:req.body.description,
-    price:req.body.price,
-    category:req.body.category
-    }
-})
-.then(result =>{
-    res.status(200).json({
-        updatedProduct:result
-    })
-})
-.catch(err =>{
-    console.log(err);
-    res.status(500).json({
-        error: err
-    })
-
-})
-});
 
 
 function middleware( req, res, next){
