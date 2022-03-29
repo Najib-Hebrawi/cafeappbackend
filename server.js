@@ -8,6 +8,7 @@
  const Joi = require('Joi');//define a Joi, if we need to use it in the future
 let { products } = require('./model/data');
 const { equal } = require('Joi');
+const bcrypt = require('bcrypt');
  dotenv.config();// we can set an enviroment variable by exexuting (export command) for mac, and (set command) for windows.
  
 
@@ -51,6 +52,7 @@ let Product = mongoose.model(
         category:String,
     })
 );
+
 // fetch the products from products Array.
 app.get('/api/products/seed', async (req, res) => {
     const products = await Product.insertMany(data.products);
@@ -79,6 +81,60 @@ app.get('/api/products/:id',async (req,res) => {
     error: err,
      message:'product does not finded, no such as this id...'})})
 });
+
+
+// define users schema
+let User = ( 
+    userSchema = mongoose.Schema ({
+    _id:mongoose.Schema.Types.ObjectId,
+    username:String,
+    password:String,
+    phone:String,
+    email:String,
+    userType:String
+    })
+);
+// here we define a route get users.
+app.get('/api/users',(req,res) => {
+    res.statusCode = 200;
+    res.send('user route is working');
+});
+
+// post a user with chacking with (bcrypt)
+app.post('/api/users/post',async (req,res)=>{
+    console.log('user route post is working')
+bcrypt.hash(req.body.password,10 ,(err,hash)=>{
+    if(err){
+        return res.status(500).json({
+            error: err
+        })
+    }
+    else{
+        const user = new User({
+            _id: new mongoose.Types.ObjectId, // add users to mongodb
+            username:req.body.username,
+            password:hash,
+            phone:req.body.phone,
+            email:req.body.email,
+            userType:req.body.userType,
+        }) 
+
+        user.save()
+        .then(result =>{
+            res.status(200).json({
+                new_user:result
+            })
+        })
+        .catch(err=>{
+            res.status(500).json({
+                error: err
+            })
+        })
+    }
+  })
+});
+
+
 
 
 // post a new product to products.
