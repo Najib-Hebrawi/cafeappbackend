@@ -5,6 +5,7 @@
  const dotenv =require('dotenv');
  const mongoose = require('mongoose'); // import mongoose.
  const data = require('./model/data'); // import data.js
+ const User = require('./model/userData');
  const Joi = require('Joi');//define a Joi, if we need to use it in the future
 let { products } = require('./model/data');
 const { equal } = require('Joi');
@@ -83,17 +84,7 @@ app.get('/api/products/:id',async (req,res) => {
 });
 
 
-// define users schema
-let User = ( 
-    userSchema = mongoose.Schema ({
-    _id:mongoose.Schema.Types.ObjectId,
-    username:String,
-    password:String,
-    phone:String,
-    email:String,
-    userType:String
-    })
-);
+
 // here we define a route get users.
 app.get('/api/users',(req,res) => {
     res.statusCode = 200;

@@ -1,4 +1,4 @@
-
+const mongoose = require('mongoose');
 
 let data= {
     categories: [
