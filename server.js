@@ -54,7 +54,13 @@ let Product = mongoose.model(
     })
 );
 
-// post a new product to products.
+// add all products from data.js to mongodb (insertMany).
+app.get('/api/products/seed', async (req, res) => {
+    const products = await Product.insertMany(data.products);
+    res.send({products}); 
+});
+
+// post a new product to products manualy.
 app.post('/api/products' , async (req,res) =>{
     const product = new Product({
         _id: new mongoose.Types.ObjectId,
@@ -78,12 +84,6 @@ app.post('/api/products' , async (req,res) =>{
     })
     });
 
-
-// fetch the products from products Array.
-app.get('/api/products/seed', async (req, res) => {
-    const products = await Product.insertMany(data.products);
-    res.send({products}); 
-});
 
 // fetch the products from the categories.
 app.get('/api/products',async (req,res) =>{
