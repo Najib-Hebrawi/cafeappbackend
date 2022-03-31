@@ -28,7 +28,7 @@ mongoose.connect(process.env.MONGODB_URI, {});
 
 
 // add the middlewarw at the global level// this is going to be run before every single one of our other requests
-app.use(middleware);
+//app.use(middleware);
 
 
 // here we define a route to chake that api is working, open in lokalhost. // 
@@ -53,6 +53,31 @@ let Product = mongoose.model(
         category:String,
     })
 );
+
+// post a new product to products.
+app.post('/api/products' , async (req,res) =>{
+    const product = new Product({
+        _id: new mongoose.Types.ObjectId,
+        name:req.body.name,
+        description:req.body.description,
+        price:req.body.price,
+        category:req.body.category
+    })
+    product.save()
+    .then(result =>{
+        console.log(result);
+        res.status(200).json({
+            newProduct:result,
+        })
+    })
+    .catch(err =>{
+        console.log(err);
+        res.status(500).json({
+            error: err
+        })
+    })
+    });
+
 
 // fetch the products from products Array.
 app.get('/api/products/seed', async (req, res) => {
@@ -83,31 +108,6 @@ app.get('/api/products/:id',async (req,res) => {
      message:'product does not finded, no such as this id...'})})
 });
 
-
-
-// post a new product to products.
-app.post('/api/products' , async (req,res) =>{
-    const product = new Product({
-        _id: new mongoose.Types.ObjectId,
-        name:req.body.name,
-        description:req.body.description,
-        price:req.body.price,
-        category:req.body.category
-    })
-    product.save()
-    .then(result =>{
-        console.log(result);
-        res.status(200).json({
-            newProduct:result,
-        })
-    })
-    .catch(err =>{
-        console.log(err);
-        res.status(500).json({
-            error: err
-        })
-    })
-    });
     
     // delete a product from products.
     app.delete('/api/products/:id' , async (req,res) =>{
