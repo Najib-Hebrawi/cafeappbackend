@@ -23,7 +23,9 @@ const bcrypt = require('bcrypt');
 
 const hostname = process.env.HOST;
 const port = process.env.PORT || 3000;
-mongoose.connect(process.env.MONGODB_URI, {});
+mongoose.connect(process.env.MONGODB_URI, () => {
+    console.log("DB is connected")
+});
 
 
 
