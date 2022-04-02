@@ -23,10 +23,10 @@ const bcrypt = require('bcrypt');
 
 const hostname = process.env.HOST;
 const port = process.env.PORT || 3000;
-mongoose.connect(process.env.MONGODB_URI, () => {
-    console.log("DB is connected")
-});
-
+mongoose.connect(process.env.MONGODB_URI);
+const db = mongoose.connection
+db.on('error', (error) => console.error(error))
+db.once('open', () => console.log('connected to Database'))
 
 
 // add the middlewarw at the global level// this is going to be run before every single one of our other requests
