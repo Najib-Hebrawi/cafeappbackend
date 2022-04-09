@@ -1,8 +1,17 @@
-#Author RGA797
+#Author RGA797, JensHOls
 
 # syntax=docker/dockerfile:1
+
 FROM node
 
-WORKDIR /server
+WORKDIR /home/app/cafeappbackend
 
-COPY . .
+COPY package*.json ./
+
+USER node
+
+RUN npm install
+
+COPY --chown=node:node . .
+
+CMD [ "node", "server.js" ]
