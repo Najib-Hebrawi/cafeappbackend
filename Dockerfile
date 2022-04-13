@@ -8,8 +8,6 @@ WORKDIR /home/app/cafeappbackend
 
 COPY package*.json ./
 
-USER node
-
 RUN npm install
 
 COPY --chown=node:node . .
