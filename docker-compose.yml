@@ -41,7 +41,7 @@ services:
       - web-root:/var/www/html
     depends_on:
       - webserver
-    command: certonly --webroot -webroot-path=/var/www/html --email s201729@student.dtu.dk --agree-tos --no-eff-email -$
+    command: certonly --webroot -webroot-path=/var/www/html --email s201729@student.dtu.dk --agree-tos --no-eff-email --staging -d group13.bhsi.xyz.com -d group13.bhsil.xyz
 
 volumes:
   certbot-etc:
