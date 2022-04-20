@@ -17,7 +17,7 @@ services:
     ports:
       - "8080:80"
     volumes:
-      #      - web-root:/var/www/html
+      - web-root:/var/www/html
       - /home/app/cafeappbackend/nginx-conf:/etc/nginx/conf.d
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
@@ -28,6 +28,7 @@ services:
 
   db:
     image: mongo
+    container_name: db
     ports:
       - "27017:27017"
     environment:
@@ -40,20 +41,20 @@ services:
     volumes:
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
-    #      - web-root:/var/www/html
+      - web-root:/var/www/html
     depends_on:
       - webserver
-    command: certonly --webroot -webroot-path=/var/www/html --email s201729@student.dtu.dk --agree-tos --no-eff-email --staging -d group13.bhsi.xyz.com -d group13.bhsil.xyz
+    command: certonly --webroot --webroot-path=/var/www/html --email s201729@student.dtu.dk --agree-tos --no-eff-email --staging -d group13.bhsi.xyz.com -d group13.bhsil.xyz
 
 volumes:
   certbot-etc:
   certbot-var:
-  #  web-root:
-  #   driver: local
-  #  driver_opts:
-  #   type: none
-  #  device:
-  # o: bind
+  web-root:
+    driver: local
+    driver_opts:
+      type: none
+      device:
+      o: bind
 
 networks:
   app-network:
