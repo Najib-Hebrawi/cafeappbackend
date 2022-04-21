@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     image: cafe-test
-    container_name: cafe-app
+    container_name: nodejs
     restart: unless-stopped
     networks:
       - app-network
@@ -15,12 +15,14 @@ services:
     image: nginx
     container_name: webserver
     ports:
-      - "8080:80"
+      - "80:80"
+      - "443:443"
     volumes:
       - web-root:/var/www/html
       - /home/app/cafeappbackend/nginx-conf:/etc/nginx/conf.d
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
+      - dhparam:/etc/ssl/certs
     depends_on:
       - nodejs
     networks:
@@ -44,7 +46,7 @@ services:
       - web-root:/var/www/html
     depends_on:
       - webserver
-    command: certonly --webroot --webroot-path=/var/www/html --email s201729@student.dtu.dk --agree-tos --no-eff-email --staging -d group13.bhsi.xyz.com -d group13.bhsi.xyz
+    command: certonly --webroot --webroot-path=/var/www/html --email s201729@student.dtu.dk --agree-tos --no-eff-email --force-renewal -d group13.bhsi.xyz.com -d group13.bhsi.xyz
 
 volumes:
   certbot-etc:
@@ -54,6 +56,13 @@ volumes:
     driver_opts:
       type: none
       device: /home/app/cafeappbackend/views/
+      o: bind
+
+  dhparam:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/app/cafeappbackend/dhparam/
       o: bind
 
 networks:
