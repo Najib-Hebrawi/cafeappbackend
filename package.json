@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/Najib-Hebrawi/cafeappbackend/issues"
   },
-  "homepage": "https://github.com/Najib-Hebrawi/cafeappbackend#readme"
+  "homepage": "https://github.com/Najib-Hebrawi/cafeappbackend#readme",
+  "dependencies": {
+    "ejs": "^3.1.7",
+    "express": "^4.17.3"
+  }
 }
