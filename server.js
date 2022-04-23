@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const brcypt = require('bcrypt');
 
 
 
@@ -40,9 +41,24 @@ app.get('/register', (req, res) =>{
     res.render('register.ejs')
 
 });
-app.post('/register', (req,res) =>{
-    req.body.email
-
+// it should be a async function to use try/catch.
+app.post('/register', async (req,res) =>{
+    try {
+        const hashedPassword = await  brcypt.hash(req.body.password, 10)
+        users.push({
+            // if we have a database it will automatically generat a ID.
+            id: Date.now().toString(),
+            name: req.body.name,
+            email: req.body.email,
+            password: hashedPassword
+        })
+        // if users.push was successful we want to redirect the user back to the login page,
+        // so they can log in with the account they just registered
+        res.redirect('/login')
+    } catch  {
+        // if they failer so
+        res.redirect('/register')
+    }
 });
 
 
