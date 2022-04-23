@@ -59,6 +59,7 @@ app.post('/register', async (req,res) =>{
         // if they failer so
         res.redirect('/register')
     }
+    console.log(users);
 });
 
 
