@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Najib-Hebrawi/cafeappbackend#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "ejs": "^3.1.7",
     "express": "^4.17.3"
   },
