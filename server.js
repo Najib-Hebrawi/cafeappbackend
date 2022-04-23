@@ -4,7 +4,9 @@ const brcypt = require('bcrypt');
 
 
 
-// we store our users in a local variable inside our server. (is something you would never want to do in production, but it is easy for os)
+// we store our users in a local variable inside our server. (is something you would never want to do in production, but it is easy for os).
+// every time we save our app and reloads this variable users is going to get reset to an empty array, 
+//so every time we make a change we nedd to re add our user
 const users =[]
 
 app.set('view-engine', 'ejs');
