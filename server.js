@@ -19,6 +19,11 @@ initializePassport(
      id => users.find(user => user.id === id)
      );
 
+/*
+ method override : this will allow us to do is actually override our
+ method that we are using and so instead of using post we can actually call this delete method here 
+*/
+const methodOverride = require('method-override');
 
 
 
@@ -42,6 +47,7 @@ app.use(session({
 }));
 app.use(passport.initialize()) // this is a funcio inside the passport: is going to set up some of the basics for us
 app.use(passport.session()) // to presistes
+app.use(methodOverride('_method'));
 
 
 

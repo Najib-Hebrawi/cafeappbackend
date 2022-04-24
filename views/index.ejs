@@ -1,6 +1,12 @@
 
+<h1>Hi <%= name %></h1>
+<form action="/logout?_method=DELETE" method="POST">
+  <button type="submit">Log Out</button>
+</form>
 
 
 
-
-<h1>Hi</h1>
+<% /* %>
+so this _method is what we are using to override our method which we set herer ( method="POST") so we are going to override that with delete so that 
+inside of our server.js there we can all app.delete t
+<% */ %>
