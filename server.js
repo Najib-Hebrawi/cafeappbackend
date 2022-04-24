@@ -1,9 +1,23 @@
+
+/*
+lead in our environment variables.
+procution: essentially it means that we are in development.
+.config: this is going to lead in all of our different environment variables and set them inside of process.env 
+*/
+if(process.env.NODE_ENV !== 'production') {
+    require('dotenv').config()}
+
 const express = require('express');
 const app = express();
 const brcypt = require('bcrypt');
+const flash = require('express-flash');
+const session = require('express-session');
 const passport = require('passport');
 const initializePassport = require('./passport-config');
-initializePassport(passport);
+initializePassport(
+    passport,
+     email => users.find(user => user.email === email)
+     );
 
 
 
@@ -21,6 +35,14 @@ app.set('view-engine', 'ejs');
 // that telling our application that what we want to do is take these forms from
 // our email and password and we want to be able to access them inside of our request variable inside of our post method.
 app.use(express.urlencoded({extended: false}));
+
+app.use(flash());
+app.use(session({
+    // essentially a key tht we want to keep secret which is going to encrypt all of our information for us
+    secret: process.env.SESSION_SECRET,
+    resave: false, // this says should we resave our session variables if nothing has changed (in our case we do not want to resave it)
+    saveUninitialized: false // this saying do you want to save an empty value in the session if there is no value (in our case we do not need to do that)
+}))
 
 
 
