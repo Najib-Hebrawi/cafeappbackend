@@ -112,7 +112,6 @@ app.delete('/logout', (req, res) =>{
 
 
 
-
 // protecting all of our different routes for when we are logged in.(middleware function) check if the users authenticated.
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated())  { // this function return true or false
