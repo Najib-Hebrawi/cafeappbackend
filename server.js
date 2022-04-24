@@ -54,8 +54,8 @@ app.use(passport.session()) // to presistes
 
 
 
-
-app.get('/' , (req, res) =>{
+ // checkAuthenticated: will auto take us to login page if we do not logged in.
+app.get('/' , checkAuthenticated, (req, res) =>{
 res.render('index.ejs', {name: req.user.name})
 });
 
@@ -109,6 +109,15 @@ app.post('/register', async (req,res) =>{
 
 
 
+
+// protecting all of our different routes for when we are logged in.(middleware function) check if the users authenticated.
+function checkAuthenticated(req, res, next) {
+    if (req.isAuthenticated())  { // this function return true or false
+      return next() // if true
+    }
+  
+    res.redirect('/login') // if false
+  }
 
 
 
