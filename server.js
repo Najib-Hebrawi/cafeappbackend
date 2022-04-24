@@ -64,13 +64,13 @@ res.render('index.ejs', {name: req.user.name})
 
 
 
-app.get('/login', (req, res) =>{
+app.get('/login', checkNotAuthenticated, (req, res) =>{
     res.render('login.ejs')
 
 });
 
 // we use passport.authenticates  middleware
-app.post('/login', passport.authenticate('local',{
+app.post('/login', checkNotAuthenticated , passport.authenticate('local',{
     // pass it a list of options for things that we want to modify.
 successRedirect: '/',  // it is where we go if there is a success 
 failureRedirect: '/login', // it is where we go if there is a failure
@@ -82,12 +82,12 @@ failureFlash: true // just going to let us have a flash message which we can dis
 
 
 
-app.get('/register', (req, res) =>{
+app.get('/register', checkNotAuthenticated , (req, res) =>{
     res.render('register.ejs')
 
 });
 // it should be a async function to use try/catch.
-app.post('/register', async (req,res) =>{
+app.post('/register', checkNotAuthenticated ,async (req,res) =>{
     try {
         const hashedPassword = await  brcypt.hash(req.body.password, 10)
         users.push({
@@ -119,6 +119,12 @@ function checkAuthenticated(req, res, next) {
     res.redirect('/login') // if false
   }
 
-
+  // this function for if we are logged in so we do not want to allow them to go back to login, because they are logged in.
+  function checkNotAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+      return res.redirect('/')
+    }
+    next()
+  }
 
 app.listen(3000);
