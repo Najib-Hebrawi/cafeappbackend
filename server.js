@@ -42,7 +42,15 @@ app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false, // this says should we resave our session variables if nothing has changed (in our case we do not want to resave it)
     saveUninitialized: false // this saying do you want to save an empty value in the session if there is no value (in our case we do not need to do that)
-}))
+}));
+app.use(passport.initialize()) // this is a funcio inside the passport: is going to set up some of the basics for us
+app.use(passport.session()) // to presistes
+
+
+
+
+
+
 
 
 
@@ -59,9 +67,14 @@ app.get('/login', (req, res) =>{
     res.render('login.ejs')
 
 });
-app.post('/login', (req,res) =>{
 
-});
+// we use passport.authenticates  middleware
+app.post('/login', passport.authenticate('local',{
+    // pass it a list of options for things that we want to modify.
+successRedirect: '/',  // it is where we go if there is a success 
+failureRedirect: '/login', // it is where we go if there is a failure
+failureFlash: true // just going to let us have a flash message which we can display to the user wich is going to be equal to our messages in (passport-config.js)
+}));
 
 
 
