@@ -1,4 +1,3 @@
-
 /*
 lead in our environment variables.
 procution: essentially it means that we are in development.
@@ -19,9 +18,6 @@ initializePassport(
      email => users.find(user => user.email === email),
      id => users.find(user => user.id === id)
      );
-
-
-
 
 
 
@@ -52,8 +48,6 @@ app.use(passport.session()) // to presistes
 
 
 
-
-
  // checkAuthenticated: will auto take us to login page if we do not logged in.
 app.get('/' , checkAuthenticated, (req, res) =>{
 res.render('index.ejs', {name: req.user.name})
@@ -68,7 +62,6 @@ app.get('/login', checkNotAuthenticated, (req, res) =>{
     res.render('login.ejs')
 
 });
-
 // we use passport.authenticates  middleware
 app.post('/login', checkNotAuthenticated , passport.authenticate('local',{
     // pass it a list of options for things that we want to modify.
@@ -106,6 +99,16 @@ app.post('/register', checkNotAuthenticated ,async (req,res) =>{
     }
     console.log(users);
 });
+
+
+
+// route to log out
+app.delete('/logout', (req, res) =>{
+    req.logout() // this is a function from passport package. it will clear a session and log our user out
+    res.redirect('/login')
+
+})
+
 
 
 
