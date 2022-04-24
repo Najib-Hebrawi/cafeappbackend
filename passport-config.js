@@ -8,7 +8,7 @@ A comprehensive set of strategies support authentication using a username and pa
 const LocalStrategy = require('passport-local').Strategy
 const bcrypt = require('bcrypt')
 
-function initialize(passport, getUserByEmail, getUserById) {
+async function initialize(passport, getUserByEmail, getUserById) {
   const authenticateUser = async (email, password, done) => {
     const user = getUserByEmail(email)
     if (user == null) {
