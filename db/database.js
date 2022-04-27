@@ -3,6 +3,7 @@ const dotenv = require('dotenv')
 
 dotenv.config()
 mongoose.connect(process.env.MONGO_URL, {
+    dbName: "DB",
     useNewUrlParser: true,
     useUnifiedTopology: true,
     family: 4
