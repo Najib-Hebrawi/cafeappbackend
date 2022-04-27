@@ -2,7 +2,7 @@ POST http://localhost:4000/api/orders
 Content-Type: application/json
 
 {
-  "username": "new sad",
+  "username": "new a",
   "phoneNumber": "4456666",
   "userComment": "ikke frugt",
   "productName": ["is","crepe"],
