@@ -1,0 +1,12 @@
+POST http://localhost:4000/api/orders
+Content-Type: application/json
+
+
+{
+  "orderId": "243435",
+  "username": "new name",
+  "phoneNumber": "4456666",
+  "userComment": "ikke frugt",
+  "productName": ["is","crepe"],
+  "productQuantity": ["2","1"]
+}
