@@ -3,10 +3,6 @@ const Schema = mongoose.Schema
 
 const OrderProduct = new Schema(
     {
-        orderId: {
-            type:String,
-            required:true
-        },
         username:{
             type:String,
             required:true
