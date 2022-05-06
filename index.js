@@ -7,7 +7,7 @@ const db = require('./db/database')
 const orderRouter = require('./route/OrderRouter')
 
 const app = express()
-const apiPort = 4000
+const apiPort = 8080
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors())
